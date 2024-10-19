@@ -1,0 +1,212 @@
+/* +++++++++++++++++++++++++++++++++++++++ FORMATO BASICO INICIO +++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* Estilo general */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilo del banner */
+.banner {
+  background-image: url('banner.jpg'); /* Reemplaza con tu imagen de banner */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex; /* Para alinear el logo y el texto en línea */
+  align-items: center; /* Centrar verticalmente el contenido */
+}
+
+.logo {
+  text-decoration: none; /* Sin subrayado */
+  color: black; /* Color del texto */
+}
+
+.logo-image {
+  height: 50px; /* Ajusta la altura del logo */
+  width: auto; /* Mantiene la proporción del logo */
+  margin-right: 10px; /* Espaciado entre el logo y el texto */
+}
+
+.logo-text {
+  font-size: 24px; /* Tamaño de la letra */
+  font-weight: bold; /* Estilo de la letra */
+}
+
+/* Barra de navegación */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 1em;
+  flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+}
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .logo img {
+  margin-right: 10px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px; /* Espacio entre los enlaces */
+  align-items: center;
+  margin: 0; /* Eliminamos los márgenes */
+  padding: 0; /* Eliminamos el padding */
+}
+
+/* Enlaces normales (con animación de la línea roja) */
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  text-decoration: none; /* Eliminamos el subrayado de los enlaces */
+  font-size: 16px; /* Tamaño de la fuente */
+  color: #000;
+  position: relative; /* Para manejar la pseudo-clase ::before */
+  padding-bottom: 5px;
+  transition: color 0.3s ease, transform 0.3s ease; /* Animamos el color y el tamaño */
+}
+
+/* Animación personalizada para "Productos" y "Categorías" */
+.nav-links a:not(#login-button)::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #962d2d; /* Color de la línea debajo del enlace */
+  transition: width 0.3s ease;
+}
+
+.nav-links a:not(#login-button):hover::before {
+  width: 100%; /* La línea se expande al 100% en hover */
+}
+
+.nav-links a:hover {
+  color: #962d2d; /* Cambia el color del texto al pasar el cursor */
+  transform: scale(1.05); /* Agranda ligeramente el enlace */
+}
+
+/* Estilo del carrito */
+.cart-link img {
+  width: 24px; /* Tamaño del ícono del carrito */
+  height: auto;
+}
+
+/* Botón de inicio de sesión (sin línea roja y sin animación de hover) */
+#login-button {
+  background-color: #962d2d;
+  color: white;
+  padding: 15px; /* Tamaño del botón de inicio de sesión */
+  border: none;
+  border-radius: 5px;
+  font-size: 14px; /* Tamaño del texto del botón */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#login-button:hover {
+  background-color: #7a2323;
+}
+
+#user-section {
+  position: relative; /* Para posicionar el menú desplegable */
+}
+
+.dropdown-menu {
+  display: block; /* Puedes cambiar esto a 'flex' si lo prefieres */
+  position: absolute; /* Cambia la posición según sea necesario */
+  background-color: white; /* O el color que desees */
+  border: 1px solid #ccc; /* Añade borde si lo deseas */
+  z-index: 1000; /* Asegúrate de que esté en la parte superior */
+}
+
+.dropdown-menu .nav-link {
+  display: block; /* Asegura que los elementos ocupen toda la línea */
+  padding: 10px; /* Espaciado interno */
+  text-decoration: none; /* Sin subrayado */
+  color: black; /* Color del texto */
+}
+
+.dropdown-menu .nav-link:hover {
+  background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
+}
+
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++ FOOTER +++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.footer {
+  background-color: #f8f8f8;
+  padding: 20px;
+  text-align: center; /* Centrar contenido en el footer */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Permitir que el contenido se ajuste en múltiples líneas */
+}
+
+.footer-section {
+  width: 45%; /* Ancho de las secciones del footer */
+  margin: 10px; /* Espaciado entre secciones del footer */
+}
+
+.location-container {
+  display: flex;
+  align-items: center;
+}
+
+.location-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.location-link:hover {
+  color: #e27f86; /* Cambia a tu color preferido al pasar el mouse */
+}
+
+.social-links a {
+  margin-right: 10px;
+}
+
+/* +++++++++++++++++++++++++++++++++++++++ ESTILOS RESPONSIVOS +++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    align-items: flex-start; /* Alinea a la izquierda */
+  }
+
+  .nav-links {
+    flex-direction: column; /* Alinea los enlaces en columna */
+    width: 100%; /* Ocupar todo el ancho */
+  }
+
+  .nav-links li {
+    margin: 5px 0; /* Espacio entre los enlaces */
+  }
+
+  .footer-container {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    align-items: center; /* Centrar contenido */
+  }
+
+  .footer-section {
+    width: 100%; /* Ocupar todo el ancho en pantallas pequeñas */
+    text-align: center; /* Centrar texto en el footer */
+  }
+}
+

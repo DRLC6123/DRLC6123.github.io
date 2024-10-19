@@ -1,0 +1,70 @@
+
+
+  /* Estilo para el contenedor de entrega */
+.delivery-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  /* Estilo para el mensaje */
+  .message {
+    background-color: #f9c2c2;
+    color: #d00000;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #d00000;
+    border-radius: 5px;
+  }
+  
+  /* Estilo para el formulario */
+  #address-form {
+    margin-bottom: 20px;
+  }
+  
+  #address-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  #address-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Estilo para el botón de añadir dirección */
+  .add-address-btn {
+    background-color: #e27f86;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-address-btn:hover {
+    background-color: #b45a60;
+  }
+  
+  /* Estilo para la lista de direcciones */
+  #address-list {
+    margin-top: 20px;
+  }
+  
+  #addresses {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #addresses li {
+    background-color: #f2f2f2;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  

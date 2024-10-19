@@ -1,0 +1,68 @@
+/* Contenedor principal del producto */
+.product-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen del producto */
+.product-container img {
+  width: 100%;
+  max-width: 400px; /* Limita el tamaño de la imagen */
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+
+/* Nombre del producto */
+.product-container h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Descripción del producto */
+.product-container p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* Precio del producto */
+.product-container p:nth-of-type(2) {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e74c3c;
+  margin-bottom: 20px;
+}
+
+/* Botón para agregar al carrito */
+.product-container button {
+  background-color: #962d2d; /* Color del botón */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+}
+
+.product-container button:hover {
+  background-color: #7d1515; /* Color al pasar el cursor */
+}
