@@ -7,6 +7,7 @@ export function AgregarProducto() {
     const { register, handleSubmit } = useForm();
     const [proveedores, setProveedores] = useState([]);
     const [categorias, setCategorias] = useState([]);
+    const [mensajeExito, setMensajeExito] = useState(''); // Para el mensaje de éxito
 
     // Convertir imagen a base64
     const convertirBase64 = (imagenes) => {
@@ -15,23 +16,19 @@ export function AgregarProducto() {
         
         reader.readAsDataURL(archivo);
         reader.onload = function () {
-            const base64ConEncabezado = reader.result; // Esto ya incluye el encabezado 'data:image/png;base64,'
+            const base64ConEncabezado = reader.result;
             setImagen(base64ConEncabezado);
         };
-    
         reader.onerror = function (error) {
             console.log('Error: ', error);
         };
     };
-    
-    
 
     // Cargar proveedores
     const fetchProveedores = async () => {
         try {
             const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Proveedor/obtener');
             const data = await response.json();
-            // Mapea el JSON para obtener id y nombre
             setProveedores(data.map(item => ({
                 id_proveedor: item.id_proveedor,
                 nombre: item.nombre,
@@ -46,7 +43,6 @@ export function AgregarProducto() {
         try {
             const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Categoria/activas');
             const data = await response.json();
-            // Mapea el JSON para obtener id y nombre
             setCategorias(data.map(item => ({
                 id_categoria: item.id_categoria,
                 nombre: item.nombre,
@@ -63,17 +59,17 @@ export function AgregarProducto() {
 
     const onSubmit = async (data) => {
         const payload = {
-            id_producto: 0,  // Ajusta según sea necesario
-            id_proveedor: data.proveedor,  // Usando el id del proveedor seleccionado
-            id_categoria: data.categoria,   // Usando el id de la categoría seleccionada
+            id_producto: 0,
+            id_proveedor: data.proveedor,
+            id_categoria: data.categoria,
             nombre: data.nombre,
             descripcion: data.descripcion,
             codigo_barra: data.codigo_barra,
             precio_base: data.precio_base,
             precio_final: data.precio_final,
-            estado: '1',  // Estado siempre "1"
-            imagen: imagen || "string",  // Si no hay imagen, se puede ajustar aquí
-            fecha_creacion: new Date().toISOString(),  // Fecha actual en formato ISO
+            estado: '1',
+            imagen: imagen || "string",
+            fecha_creacion: new Date().toISOString(),
         };
 
         try {
@@ -93,42 +89,48 @@ export function AgregarProducto() {
                 result = await response.text();
             }
 
-            console.log('Success:', result);
+            setMensajeExito('Producto agregado exitosamente.'); // Mostrar mensaje de éxito
         } catch (error) {
             console.error('Error:', error.message);
         }
     };
 
+    const handleDrop = (e) => {
+        e.preventDefault();
+        convertirBase64(e.dataTransfer.files); // Convertir archivos arrastrados a base64
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const handleClickArea = () => {
+        document.getElementById('fileInput').click(); // Simular clic en el input de archivo
+    };
+
     return (
         <div>
             <h1>Agregar Producto</h1>
+            {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>} {/* Mensaje de éxito */}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="proveedor">Seleccione un proveedor:</label>
                 <select id="proveedor" {...register('proveedor')} required>
                     <option value="">Seleccione...</option>
-                    {proveedores.length > 0 ? (
-                        proveedores.map((item) => (
-                            <option key={item.id_proveedor} value={item.id_proveedor}>
-                                {item.nombre}
-                            </option>
-                        ))
-                    ) : (
-                        <option disabled>Cargando proveedores...</option>
-                    )}
+                    {proveedores.map((item) => (
+                        <option key={item.id_proveedor} value={item.id_proveedor}>
+                            {item.nombre}
+                        </option>
+                    ))}
                 </select>
 
                 <label htmlFor="categoria">Seleccione una categoría:</label>
                 <select id="categoria" {...register('categoria')} required>
                     <option value="">Seleccione...</option>
-                    {categorias.length > 0 ? (
-                        categorias.map((item) => (
-                            <option key={item.id_categoria} value={item.id_categoria}>
-                                {item.nombre}
-                            </option>
-                        ))
-                    ) : (
-                        <option disabled>Cargando categorías...</option>
-                    )}
+                    {categorias.map((item) => (
+                        <option key={item.id_categoria} value={item.id_categoria}>
+                            {item.nombre}
+                        </option>
+                    ))}
                 </select>
 
                 <label htmlFor="nombre">Nombre *</label>
@@ -146,13 +148,30 @@ export function AgregarProducto() {
                 <label htmlFor="precio_final">Precio final *</label>
                 <input type="number" {...register('precio_final')} placeholder="Precio final" required />
 
+                {/* Área de arrastrar y seleccionar archivo */}
+                <div
+                    className="dropzone"
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onClick={handleClickArea}
+                >
+                    <p>Arrastra y suelta la imagen aquí o <span>haz clic</span> para seleccionar una imagen</p>
+                    <input
+                        type="file"
+                        id="fileInput"
+                        style={{ display: 'none' }}
+                        onChange={(e) => convertirBase64(e.target.files)}
+                    />
+                </div>
+
+                {imagen && (
+                    <div className="imagen-preview">
+                        <img src={imagen} alt="Previsualización" />
+                    </div>
+                )}
+
                 <button type="submit" className="submit-btn">Agregar Producto</button>
             </form>
-
-            <input type="file" onChange={(e) => convertirBase64(e.target.files)} />
-
-            {proveedores.length === 0 && <p>Error al cargar los proveedores</p>}
-            {categorias.length === 0 && <p>Error al cargar las categorías</p>}
         </div>
     );
 }

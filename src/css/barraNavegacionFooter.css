@@ -183,6 +183,34 @@ body {
   margin-right: 10px;
 }
 
+/* Estilo del ícono del carrito y el contador */
+.carrito-container {
+  position: relative;
+}
+
+.cart-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5px;
+  height: 5px;
+}
+
+
 /* +++++++++++++++++++++++++++++++++++++++ ESTILOS RESPONSIVOS +++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 @media (max-width: 768px) {
   .navbar {

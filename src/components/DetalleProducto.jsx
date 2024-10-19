@@ -1,29 +1,30 @@
 import { useLocation } from 'react-router-dom';
-import { useCarrito } from './CarritoContext'; // Asegúrate de importar el hook de carrito
+import { useCarrito } from './CarritoContext'; // Hook del carrito
+import { useState } from 'react';
 
 export function DetalleProducto() {
     const location = useLocation();
-    const { setCarrito } = useCarrito(); // Obtiene la función para actualizar el carrito
+    const { setCarrito } = useCarrito(); // Función para actualizar el carrito
     const { id, nombre, precio, descripcion, imagen } = location.state || {};
+    const [showAlert, setShowAlert] = useState(false); // Estado para manejar la alerta
 
     if (!id) {
         return <p>Error: ID de producto no disponible.</p>;
     }
-    
 
     const handleAgregarAlCarrito = () => {
         const producto = { id, nombre, precio, descripcion, imagen, cantidad: 1 };
         setCarrito((prev) => {
-            const productoExistente = prev.find((prod) => prod.id === id); // Busca si el producto ya está en el carrito por 'id'
+            const productoExistente = prev.find((prod) => prod.id === id);
             if (productoExistente) {
-                // Si existe, actualiza la cantidad
                 return prev.map((prod) =>
                     prod.id === id ? { ...prod, cantidad: prod.cantidad + 1 } : prod
                 );
             }
-            // Si no existe, agrega el nuevo producto
             return [...prev, producto];
         });
+        setShowAlert(true); // Mostrar alerta al agregar al carrito
+        setTimeout(() => setShowAlert(false), 2000); // Ocultar alerta después de 2 segundos
     };
 
     if (!nombre) {
@@ -37,7 +38,9 @@ export function DetalleProducto() {
             <p>{descripcion}</p>
             <p>Precio: {precio}</p>
             <button onClick={handleAgregarAlCarrito}>Agregar al Carrito</button>
-            
+
+            {/* Mostrar alerta */}
+            {showAlert && <div className="alert">Producto agregado al carrito</div>}
         </div>
     );
 }

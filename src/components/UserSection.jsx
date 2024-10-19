@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from './AuthContext'; // Asegúrate de importar el contexto
 
@@ -10,13 +10,6 @@ export function UserSection() {
     localStorage.removeItem('usuario');
     setUser(null); // Actualiza el contexto para que UserSection se re-renderice
   };
-
-  useEffect(() => {
-    if (user) {
-      const storedUser = JSON.parse(localStorage.getItem('usuario'));
-      setUser(storedUser);
-    }
-  }, [user, setUser]);
 
   return (
     <div id="user-section">

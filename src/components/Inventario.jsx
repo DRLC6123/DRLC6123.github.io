@@ -12,7 +12,7 @@ export function Inventario() {
         // Función para obtener productos de la API
         const fetchProductos = async () => {
             try {
-                const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Producto/activos'); // Cambia la URL según tu API
+                const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Producto/activos');
                 const data = await response.json();
                 setProductos(data);
             } catch (error) {
@@ -23,7 +23,7 @@ export function Inventario() {
         // Función para obtener proveedores de la API
         const fetchProveedores = async () => {
             try {
-                const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Proveedor/obtener'); // Cambia la URL según tu API
+                const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Proveedor/obtener');
                 const data = await response.json();
                 setProveedores(data);
             } catch (error) {
@@ -41,6 +41,12 @@ export function Inventario() {
             const response = await fetch(`https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Inventario/inventario?producto=${selectedProducto}&proveedor=${selectedProveedor}`);
             const data = await response.json();
             setConsultaInventario(data);
+            // Verifica que el resultado no esté vacío antes de asignar la cantidad
+            if (data && data.length > 0) {
+                setCantidad(data[0].cantidad); // Asigna la cantidad obtenida
+            } else {
+                setCantidad(''); // Limpia la cantidad si no hay resultados
+            }
         } catch (error) {
             console.error('Error al consultar el inventario:', error);
         }
@@ -57,7 +63,7 @@ export function Inventario() {
                 },
                 body: JSON.stringify({
                     id_inventario: 0, // ID siempre será 0 según lo especificado
-                    id_producto: selectedProducto,
+                    id_producto: parseInt(selectedProducto, 10), // Asegúrate de que esto sea un número
                     cantidad: parseInt(cantidad, 10),
                 }),
             });
@@ -68,6 +74,7 @@ export function Inventario() {
 
             console.log('Inventario modificado exitosamente');
             setConsultaInventario(null); // Limpia la consulta actual
+            setCantidad(''); // Limpia el campo de cantidad
         } catch (error) {
             console.error('Error al modificar el inventario:', error);
         }

@@ -11,6 +11,7 @@ import './css/registro.css';
 import './css/barraNavegacionFooter.css';
 import './css/index.css';
 import './css/detalleproducto.css';
+import './css/AgregarProducto.css';
 
 // Componentes
 import { Login } from './components/Login.jsx';
