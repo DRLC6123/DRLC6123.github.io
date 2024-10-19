@@ -32,6 +32,7 @@ import { CarritoProvider } from './components/CarritoContext.jsx';
 import { Inventario } from './components/Inventario.jsx';
 import { ControlPanel } from './components/ControlPanel.jsx';
 import { AgregarTemporada } from './components/AgregarTemporada.jsx';
+import { Pedidos } from './components/Pedidos.jsx';
 
 
 
@@ -77,6 +78,7 @@ const App = () => {
               { path: "/productos/:id", element: <DetalleProducto agregarProducto={agregarProducto}/> },
               { path: "/Perfil", element: <UserSection /> },  // Nueva ruta para el perfil
               { path: "/ControlPanel", element: <ControlPanel /> },
+              { path: "/Pedidos", element: <Pedidos></Pedidos>},
               { path: "/inventario", element: <Inventario></Inventario>}
 
 
@@ -88,7 +90,7 @@ const App = () => {
     <CarritoProvider>
         <AuthProvider>
         <ErrorBoundary>
-          <RouterProvider router={router} />
+          <RouterProvider path="/" router={router} />
           </ErrorBoundary>
       </AuthProvider>
       

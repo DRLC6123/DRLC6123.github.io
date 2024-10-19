@@ -6,10 +6,9 @@ export function Inventario() {
     const [selectedProducto, setSelectedProducto] = useState('');
     const [selectedProveedor, setSelectedProveedor] = useState('');
     const [cantidad, setCantidad] = useState('');
-    const [consultaInventario, setConsultaInventario] = useState(null);
+    const [idProducto, setIdProducto] = useState(0);
 
     useEffect(() => {
-        // Función para obtener productos de la API
         const fetchProductos = async () => {
             try {
                 const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Producto/activos');
@@ -20,7 +19,6 @@ export function Inventario() {
             }
         };
 
-        // Función para obtener proveedores de la API
         const fetchProveedores = async () => {
             try {
                 const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Proveedor/obtener');
@@ -36,16 +34,28 @@ export function Inventario() {
     }, []);
 
     const handleConsulta = async () => {
-        // Consulta el inventario con los datos seleccionados
+        if (!selectedProducto || !selectedProveedor) {
+            console.error('Selecciona un producto y un proveedor antes de consultar.');
+            return;
+        }
+
         try {
-            const response = await fetch(`https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Inventario/inventario?producto=${selectedProducto}&proveedor=${selectedProveedor}`);
+            const response = await fetch(`https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Inventario/inventario?nombreProducto=${encodeURIComponent(selectedProducto)}&nombreProveedor=${encodeURIComponent(selectedProveedor)}`);
+
+            if (!response.ok) {
+                throw new Error(`Error en la consulta: ${response.status} - ${response.statusText}`);
+            }
+
             const data = await response.json();
-            setConsultaInventario(data);
-            // Verifica que el resultado no esté vacío antes de asignar la cantidad
+            console.log('Datos de consulta:', data);
+
             if (data && data.length > 0) {
-                setCantidad(data[0].cantidad); // Asigna la cantidad obtenida
+                setCantidad(data[0].cantidad);
+                setIdProducto(data[0].id_producto);
             } else {
-                setCantidad(''); // Limpia la cantidad si no hay resultados
+                console.error('No se encontraron datos en la consulta');
+                setCantidad('');
+                setIdProducto(0);
             }
         } catch (error) {
             console.error('Error al consultar el inventario:', error);
@@ -54,7 +64,12 @@ export function Inventario() {
 
     const handleModificacion = async (e) => {
         e.preventDefault();
-        // Modifica la cantidad en el inventario
+
+        if (idProducto <= 0 || cantidad === '') {
+            console.error('ID de producto o cantidad no válidos. Verifica las selecciones.');
+            return;
+        }
+
         try {
             const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Inventario/modificar', {
                 method: 'PUT',
@@ -62,19 +77,22 @@ export function Inventario() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    id_inventario: 0, // ID siempre será 0 según lo especificado
-                    id_producto: parseInt(selectedProducto, 10), // Asegúrate de que esto sea un número
+                    id_inventario: 0, // Si id_inventario siempre es 0 según el requerimiento
+                    id_producto: idProducto,
                     cantidad: parseInt(cantidad, 10),
                 }),
             });
 
             if (!response.ok) {
-                throw new Error('Error al modificar el inventario');
+                const errorText = await response.text();
+                throw new Error(`Error al modificar el inventario: ${response.status} - ${errorText}`);
             }
 
             console.log('Inventario modificado exitosamente');
-            setConsultaInventario(null); // Limpia la consulta actual
-            setCantidad(''); // Limpia el campo de cantidad
+            setCantidad('');
+            setSelectedProducto('');
+            setSelectedProveedor('');
+            setIdProducto(0);
         } catch (error) {
             console.error('Error al modificar el inventario:', error);
         }
@@ -89,11 +107,21 @@ export function Inventario() {
                     <select
                         id="producto"
                         value={selectedProducto}
-                        onChange={(e) => setSelectedProducto(e.target.value)}
+                        onChange={(e) => {
+                            const productoSeleccionado = e.target.value;
+                            setSelectedProducto(productoSeleccionado);
+
+                            const producto = productos.find(p => p.nombre === productoSeleccionado);
+                            if (producto) {
+                                setIdProducto(producto.id_producto);
+                            } else {
+                                setIdProducto(0);
+                            }
+                        }}
                     >
                         <option value="">Seleccione un producto</option>
                         {productos.map((producto) => (
-                            <option key={producto.id} value={producto.id}>
+                            <option key={producto.id_producto} value={producto.nombre}>
                                 {producto.nombre}
                             </option>
                         ))}
@@ -104,11 +132,14 @@ export function Inventario() {
                     <select
                         id="proveedor"
                         value={selectedProveedor}
-                        onChange={(e) => setSelectedProveedor(e.target.value)}
+                        onChange={(e) => {
+                            const proveedorSeleccionado = e.target.value;
+                            setSelectedProveedor(proveedorSeleccionado);
+                        }}
                     >
                         <option value="">Seleccione un proveedor</option>
                         {proveedores.map((proveedor) => (
-                            <option key={proveedor.id} value={proveedor.id}>
+                            <option key={proveedor.id} value={proveedor.nombre}>
                                 {proveedor.nombre}
                             </option>
                         ))}
@@ -129,16 +160,6 @@ export function Inventario() {
                 </button>
                 <button type="submit">Modificar</button>
             </form>
-            
-            {/* Muestra los resultados de la consulta */}
-            {consultaInventario && (
-                <div className="resultado-consulta">
-                    <h3>Resultado de la Consulta</h3>
-                    <p>Producto: {consultaInventario[0]?.producto}</p>
-                    <p>Proveedor: {consultaInventario[0]?.proveedor}</p>
-                    <p>Cantidad: {consultaInventario[0]?.cantidad}</p>
-                </div>
-            )}
         </div>
     );
 }

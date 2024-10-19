@@ -13,7 +13,7 @@ export function Barra() {
     <nav className="navbar">
       <div className="logo-container">
         <NavLink to="/" className="logo">
-          <img src="/public/icons/icono.png" alt="Logo" className="logo-image" width="100" />
+          <img src="/icons/icono.png" alt="Logo" className="logo-image" width="100" />
           <span className="logo-text">El Regalito</span>
         </NavLink>
       </div>
@@ -33,7 +33,7 @@ export function Barra() {
         </li>
         <li className="carrito-container">
           <NavLink to="/carrito" className="cart-link">
-            <img src="/public/icons/carrito de compras.png" alt="Carrito de Compras" className="cart-icon" width="32" />
+            <img src="/icons/carrito de compras.png" alt="Carrito de Compras" className="cart-icon" width="32" />
             {totalProductos > 0 && <span className="cart-count">{totalProductos}</span>}
           </NavLink>
         </li>

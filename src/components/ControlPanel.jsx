@@ -27,6 +27,12 @@ return(
             Agregar Temporada
           </NavLink>
         </li>
+        
+        <li className="">
+        <NavLink to="/Pedidos" className="nav-button">
+            Pedidos
+          </NavLink>
+        </li>
 
         <li className="">
         <NavLink to="/Inventario" className="nav-button">
