@@ -1,4 +1,3 @@
-
 .cart-container {
   max-width: 900px;
   margin: 50px auto;
@@ -12,40 +11,89 @@
   margin-bottom: 30px;
 }
 
-/* Tabla del carrito */
-.cart-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
+/* Tarjetas de productos */
+.product-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px; /* Añade más espacio entre los elementos */
 }
 
-.cart-table th,
-.cart-table td {
-  padding: 15px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
+.product-card .product-details {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Añade más espacio entre la imagen y el texto */
+  flex: 2; /* Da más espacio a la parte de la información */
 }
 
-.cart-table th {
-  background-color: #333;
-  color: white;
-}
-
-.cart-table td input[type="number"] {
-  width: 50px;
-  text-align: center;
-}
-
-.cart-table .remove-btn {
-  background-color: #d9534f;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
+.product-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 5px;
 }
 
-.cart-table .remove-btn:hover {
+.product-card .quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-card .quantity-control button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px; /* Tamaño del círculo */
+  height: 35px;
+  border-radius: 50%;
+  background-color: #28a745; /* Verde para aumentar */
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.product-card .quantity-control button.decrease {
+  background-color: #dc3545; /* Rojo para disminuir */
+}
+
+.product-card .quantity-control button:hover {
+  opacity: 0.8;
+}
+
+.product-card .product-info {
+  text-align: left;
+}
+
+.product-card .product-price {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.product-card .quantity-control span {
+  font-size: 21px; /* Tamaño de la cantidad */
+  text-align: center;
+  width: 20px;
+}
+
+/* Botón de eliminar más pequeño */
+.product-card .remove-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 1px; /* Reduce el tamaño del botón */
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px; /* Reduce el tamaño del texto */
+}
+
+.product-card .remove-btn:hover {
   background-color: #c9302c;
 }
 
@@ -55,84 +103,27 @@
   margin-top: 20px;
 }
 
-.cart-total h3 {
-  display: inline-block;
-  margin-right: 20px;
-  font-size: 24px;
+.cart-total div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+.cart-total div h3 {
+  font-size: 22px;
 }
 
 .checkout-btn {
-  background-color: #e27f86;
+  background-color: #c21723;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
+  width: 100%;
 }
 
 .checkout-btn:hover {
   background-color: #b45a60;
-}
-
-
-/* Estilo de la pantalla emergente (modal) */
-.modal {
-display: none;
-position: fixed;
-z-index: 1000;
-left: 0;
-top: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0, 0, 0, 0.5);
-animation: fadeIn 0.5s ease;
-}
-
-/* Contenido de la pantalla emergente */
-.modal-content {
-background-color: white;
-margin: 15% auto;
-padding: 20px;
-width: 80%;
-max-width: 400px;
-border-radius: 10px;
-text-align: center;
-animation: slideIn 0.5s ease;
-position: relative;
-}
-
-/* Animación de entrada */
-@keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
-}
-
-@keyframes slideIn {
-from { transform: translateY(-50px); opacity: 0; }
-to { transform: translateY(0); opacity: 1; }
-}
-
-/* Botón para cerrar la pantalla emergente */
-.close-btn {
-position: absolute;
-top: 10px;
-right: 20px;
-font-size: 24px;
-cursor: pointer;
-}
-
-.close-btn:hover {
-color: red;
-}
-
-/* Estilos del botón */
-.checkout-btn, .confirm-btn {
-  background-color: #e27f86;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
 }

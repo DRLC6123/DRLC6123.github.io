@@ -78,3 +78,19 @@ a:hover {
   text-decoration: none; /* Quita el subrayado al hacer hover */
   color: inherit; /* Mantiene el color original al hacer hover */
 }
+
+.disabled {
+  pointer-events: none; /* Desactiva todos los eventos del mouse */
+  opacity: 0.5; /* Aplica un efecto de opacidad para indicar que está desactivado */
+}
+
+.producto-card.disabled {
+  opacity: 0.5; /* Makes the product appear grayed out */
+  pointer-events: none; /* Prevents any mouse events on the entire card */
+}
+
+.details-link.disabled {
+  cursor: not-allowed; /* Shows a 'not-allowed' cursor */
+  color: gray; /* Changes the link color to gray */
+  text-decoration: none; /* Removes underline */
+}

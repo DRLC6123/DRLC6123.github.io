@@ -12,6 +12,7 @@ import './css/barraNavegacionFooter.css';
 import './css/index.css';
 import './css/detalleproducto.css';
 import './css/AgregarProducto.css';
+import './css/controlPanel.css';
 
 // Componentes
 import { Login } from './components/Login.jsx';
@@ -25,16 +26,19 @@ import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { DetalleProducto } from './components/DetalleProducto.jsx';
 import { Carrito } from './components/carrito.jsx';
 import { AuthProvider } from './components/AuthContext.jsx';
-import {Direcciones} from './components/Direcciones.jsx'
+import { Direcciones } from './components/Direcciones.jsx';
 import { AgregarDireccion } from './components/AgregarDireccion.jsx';
-import { UserSection } from './components/UserSection.jsx'
+import { UserSection } from './components/UserSection.jsx';
 import { CarritoProvider } from './components/CarritoContext.jsx';
 import { Inventario } from './components/Inventario.jsx';
 import { ControlPanel } from './components/ControlPanel.jsx';
 import { AgregarTemporada } from './components/AgregarTemporada.jsx';
 import { Pedidos } from './components/Pedidos.jsx';
-
-
+import { AgregarProveedor } from './components/AgregarProveedor.jsx';
+import { VerPedidos } from './components/VerPedidos.jsx';
+import { ModificarCategoria } from './components/ModificarCategoria.jsx';
+import ModificarOferta from './components/ModificarOferta.jsx';
+import { Ofertas } from './components/OfertasPagina.jsx';
 
 const Layout = ({ agregarProducto }) => (
   <>
@@ -42,24 +46,26 @@ const Layout = ({ agregarProducto }) => (
     <Outlet context={{ agregarProducto }} />
   </>
 );
+
 const App = () => {
   const [carrito, setCarrito] = useState([]);
 
   const agregarProducto = (producto) => {
-      const existe = carrito.find((prod) => prod.nombre === producto.nombre);
-      if (existe) {
-          const nuevosProductos = carrito.map((prod) =>
-              prod.nombre === producto.nombre
-                  ? { ...prod, cantidad: (prod.cantidad || 1) + 1 }
-                  : prod
-          );
-          setCarrito(nuevosProductos);
-      } else {
-          setCarrito((prev) => [...prev, { ...producto, cantidad: 1 }]);
-      }
+    const existe = carrito.find((prod) => prod.nombre === producto.nombre);
+    if (existe) {
+      const nuevosProductos = carrito.map((prod) =>
+        prod.nombre === producto.nombre
+          ? { ...prod, cantidad: (prod.cantidad || 1) + 1 }
+          : prod
+      );
+      setCarrito(nuevosProductos);
+    } else {
+      setCarrito((prev) => [...prev, { ...producto, cantidad: 1 }]);
+    }
   };
 
   const router = createBrowserRouter([
+
       {
           path: "/",
           element: <Layout agregarProducto={agregarProducto} />,
@@ -70,15 +76,28 @@ const App = () => {
               { path: "/login", element: <Login/> },
               { path: "/registro", element: <Registro /> },
               { path: "/AgregarProducto", element: <AgregarProducto /> },
+              { path: "/ModificarProducto", element: <AgregarProducto /> },
+
               { path: "/AgregarTemporada", element: <AgregarTemporada /> },
+              { path: "/ModificarTemporada", element: <AgregarTemporada /> },
+
               { path: "/AgregarCategoria", element: <AgregarCategoria /> },
+              { path: "/ModificarCategoria", element: <ModificarCategoria /> },
+
               { path: "/AgregarOferta", element: <AgregarOferta /> },
+              { path: "/ModificarOferta", element: <ModificarOferta /> },
+
               { path: "/Direcciones", element: <Direcciones /> },
               { path: "/AgregarDireccion", element: <AgregarDireccion /> },
               { path: "/productos/:id", element: <DetalleProducto agregarProducto={agregarProducto}/> },
               { path: "/Perfil", element: <UserSection /> },  // Nueva ruta para el perfil
               { path: "/ControlPanel", element: <ControlPanel /> },
               { path: "/Pedidos", element: <Pedidos></Pedidos>},
+              { path: "/AgregarProveedor", element:<AgregarProveedor></AgregarProveedor>},
+              { path: "/VerPedidos", element:<VerPedidos/>},
+              { path: "/Ofertas", element:<Ofertas/>},
+
+
               { path: "/inventario", element: <Inventario></Inventario>}
 
 
@@ -88,18 +107,14 @@ const App = () => {
 
   return (
     <CarritoProvider>
-        <AuthProvider>
+      <AuthProvider>
         <ErrorBoundary>
           <RouterProvider path="/" router={router} />
-          </ErrorBoundary>
-      </AuthProvider>
-      
 
+        </ErrorBoundary>
+      </AuthProvider>
     </CarritoProvider>
-      
   );
 };
 
-
 createRoot(document.getElementById('root')).render(<App />);
-

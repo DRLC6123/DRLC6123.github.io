@@ -23,6 +23,34 @@ export function Pedidos() {
         filtroEstado ? pedido.estado === filtroEstado : true
     );
 
+    const handleEstadoChange = async (pedidoId, nuevoEstado) => {
+        try {
+            const response = await fetch(`https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Pedido/${pedidoId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ estado: nuevoEstado }), // Cuerpo de la petición
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al actualizar el estado del pedido');
+            }
+
+            // Actualizar el estado localmente si la actualización fue exitosa
+            setPedidos(prevPedidos => 
+                prevPedidos.map(pedido =>
+                    pedido.id_pedido === pedidoId ? { ...pedido, estado: nuevoEstado } : pedido
+                )
+            );
+
+            alert('Estado actualizado exitosamente');
+        } catch (error) {
+            console.error('Error al cambiar el estado:', error);
+            alert('Error al cambiar el estado');
+        }
+    };
+
     return (
         <div>
             <h2>Revisión de Pedidos</h2>
@@ -52,6 +80,7 @@ export function Pedidos() {
                         <th>Estado</th>
                         <th>Costo Envío</th>
                         <th>Total</th>
+                        <th>Cambiar Estado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,6 +92,19 @@ export function Pedidos() {
                             <td>{pedido.estado}</td>
                             <td>{pedido.costo_envio}</td>
                             <td>{pedido.total}</td>
+                            <td>
+                                <select
+                                    value={pedido.estado}
+                                    onChange={(e) => handleEstadoChange(pedido.id_pedido, e.target.value)}
+                                >
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="enviado">Enviado</option>
+                                    <option value="entregado">Entregado</option>
+                                </select>
+                                <button onClick={() => handleEstadoChange(pedido.id_pedido, pedido.estado)}>
+                                    Guardar
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

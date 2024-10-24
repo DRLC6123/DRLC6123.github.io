@@ -1,74 +1,58 @@
 import React, { useEffect, useState } from 'react';
+import * as XLSX from 'xlsx';
 
 export function Inventario() {
+    const [inventario, setInventario] = useState([]);
     const [productos, setProductos] = useState([]);
-    const [proveedores, setProveedores] = useState([]);
-    const [selectedProducto, setSelectedProducto] = useState('');
-    const [selectedProveedor, setSelectedProveedor] = useState('');
-    const [cantidad, setCantidad] = useState('');
-    const [idProducto, setIdProducto] = useState(0);
 
     useEffect(() => {
+        // Fetch inventory data
+        const fetchInventario = async () => {
+            try {
+                const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Inventario/inventario');
+                const data = await response.json();
+                setInventario(data);
+            } catch (error) {
+                console.error('Error al obtener el inventario:', error);
+            }
+        };
+
+        // Fetch products data
         const fetchProductos = async () => {
             try {
                 const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Producto/activos');
                 const data = await response.json();
                 setProductos(data);
             } catch (error) {
-                console.error('Error al obtener productos:', error);
+                console.error('Error al obtener los productos:', error);
             }
         };
 
-        const fetchProveedores = async () => {
-            try {
-                const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Proveedor/obtener');
-                const data = await response.json();
-                setProveedores(data);
-            } catch (error) {
-                console.error('Error al obtener proveedores:', error);
-            }
-        };
-
+        fetchInventario();
         fetchProductos();
-        fetchProveedores();
     }, []);
 
-    const handleConsulta = async () => {
-        if (!selectedProducto || !selectedProveedor) {
-            console.error('Selecciona un producto y un proveedor antes de consultar.');
-            return;
-        }
-
-        try {
-            const response = await fetch(`https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Inventario/inventario?nombreProducto=${encodeURIComponent(selectedProducto)}&nombreProveedor=${encodeURIComponent(selectedProveedor)}`);
-
-            if (!response.ok) {
-                throw new Error(`Error en la consulta: ${response.status} - ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            console.log('Datos de consulta:', data);
-
-            if (data && data.length > 0) {
-                setCantidad(data[0].cantidad);
-                setIdProducto(data[0].id_producto);
-            } else {
-                console.error('No se encontraron datos en la consulta');
-                setCantidad('');
-                setIdProducto(0);
-            }
-        } catch (error) {
-            console.error('Error al consultar el inventario:', error);
-        }
+    // Handle cell edit
+    const handleEdit = (index, field, value) => {
+        const updatedInventario = [...inventario];
+        updatedInventario[index][field] = value;
+        setInventario(updatedInventario);
     };
 
-    const handleModificacion = async (e) => {
-        e.preventDefault();
-
-        if (idProducto <= 0 || cantidad === '') {
-            console.error('ID de producto o cantidad no válidos. Verifica las selecciones.');
+    // Save changes to the API
+    const handleSave = async (index) => {
+        const item = inventario[index];
+        const producto = productos.find(p => p.nombre === item.producto);
+        if (!producto) {
+            console.error('Producto no encontrado');
             return;
         }
+
+        const dataToSend = {
+            id_inventario: 0,
+            id_producto: producto.id_producto,
+            cantidad: item.cantidad
+        };
 
         try {
             const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Inventario/modificar', {
@@ -76,90 +60,60 @@ export function Inventario() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    id_inventario: 0, // Si id_inventario siempre es 0 según el requerimiento
-                    id_producto: idProducto,
-                    cantidad: parseInt(cantidad, 10),
-                }),
+                body: JSON.stringify(dataToSend),
             });
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Error al modificar el inventario: ${response.status} - ${errorText}`);
+            if (response.ok) {
+                console.log('Inventario actualizado');
+                alert('Inventario actualizado exitosamente.');
+            } else {
+                console.error('Error al actualizar el inventario:', response.statusText);
             }
-
-            console.log('Inventario modificado exitosamente');
-            setCantidad('');
-            setSelectedProducto('');
-            setSelectedProveedor('');
-            setIdProducto(0);
         } catch (error) {
-            console.error('Error al modificar el inventario:', error);
+            console.error('Error al enviar los datos:', error);
         }
     };
 
-    return (
-        <div className="inventario">
-            <h2>Gestión de Inventario</h2>
-            <form onSubmit={handleModificacion}>
-                <div>
-                    <label htmlFor="producto">Seleccionar Producto:</label>
-                    <select
-                        id="producto"
-                        value={selectedProducto}
-                        onChange={(e) => {
-                            const productoSeleccionado = e.target.value;
-                            setSelectedProducto(productoSeleccionado);
+     // Función para exportar la tabla a un archivo Excel
+     const exportarExcel = () => {
+        const hoja = XLSX.utils.json_to_sheet(inventario);
+        const libro = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(libro, hoja, 'Inventario');
+        XLSX.writeFile(libro, 'inventario.xlsx');
+    };
 
-                            const producto = productos.find(p => p.nombre === productoSeleccionado);
-                            if (producto) {
-                                setIdProducto(producto.id_producto);
-                            } else {
-                                setIdProducto(0);
-                            }
-                        }}
-                    >
-                        <option value="">Seleccione un producto</option>
-                        {productos.map((producto) => (
-                            <option key={producto.id_producto} value={producto.nombre}>
-                                {producto.nombre}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="proveedor">Seleccionar Proveedor:</label>
-                    <select
-                        id="proveedor"
-                        value={selectedProveedor}
-                        onChange={(e) => {
-                            const proveedorSeleccionado = e.target.value;
-                            setSelectedProveedor(proveedorSeleccionado);
-                        }}
-                    >
-                        <option value="">Seleccione un proveedor</option>
-                        {proveedores.map((proveedor) => (
-                            <option key={proveedor.id} value={proveedor.nombre}>
-                                {proveedor.nombre}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="cantidad">Cantidad:</label>
-                    <input
-                        type="number"
-                        id="cantidad"
-                        value={cantidad}
-                        onChange={(e) => setCantidad(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="button" onClick={handleConsulta}>
-                    Consultar
-                </button>
-                <button type="submit">Modificar</button>
-            </form>
+    return (
+        <div>
+            <h2>Inventario</h2>
+            <button onClick={exportarExcel}>Exportar a Excel</button>
+            <table border="1" cellPadding="10">
+            <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Proveedor</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {inventario.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.producto}</td>
+                            <td>{item.proveedor}</td>
+                            <td>
+                                <input
+                                    type="number"
+                                    value={item.cantidad}
+                                    onChange={(e) => handleEdit(index, 'cantidad', e.target.value)}
+                                />
+                            </td>
+                            <td>
+                                <button onClick={() => handleSave(index)}>Guardar</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

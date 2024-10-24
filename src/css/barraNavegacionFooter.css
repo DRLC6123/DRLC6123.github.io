@@ -7,7 +7,7 @@ body {
 
 /* Estilo del banner */
 .banner {
-  background-image: url('banner.jpg'); /* Reemplaza con tu imagen de banner */
+  background-image: url('/public/icons/banner.jpg'); /* Reemplaza con tu imagen de banner */
   background-size: cover;
   background-position: center;
   color: white;
@@ -109,7 +109,7 @@ body {
 #login-button {
   background-color: #962d2d;
   color: white;
-  padding: 15px; /* Tamaño del botón de inicio de sesión */
+  padding: 55px; /* Tamaño del botón de inicio de sesión */
   border: none;
   border-radius: 5px;
   font-size: 14px; /* Tamaño del texto del botón */
@@ -122,26 +122,73 @@ body {
 }
 
 #user-section {
-  position: relative; /* Para posicionar el menú desplegable */
+  position: relative; /* Para posicionar correctamente el menú desplegable */
 }
 
-.dropdown-menu {
-  display: block; /* Puedes cambiar esto a 'flex' si lo prefieres */
-  position: absolute; /* Cambia la posición según sea necesario */
-  background-color: white; /* O el color que desees */
-  border: 1px solid #ccc; /* Añade borde si lo deseas */
-  z-index: 1000; /* Asegúrate de que esté en la parte superior */
+#user-section button.dropdown-button {
+  background-color: #962d2d; /* Color de fondo del botón */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 15px; /* Ajusta el tamaño del botón */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de la fuente del botón */
+  cursor: pointer; /* Cursor de puntero */
+  transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
 }
 
-.dropdown-menu .nav-link {
-  display: block; /* Asegura que los elementos ocupen toda la línea */
-  padding: 10px; /* Espaciado interno */
+/* Menú desplegable dentro del user-section */
+#user-section .dropdown-menu {
+  display: none; /* Oculto por defecto */
+  position: absolute; /* Para que se sobreponga al contenido */
+  top: 100%; /* Posicionar justo debajo del botón */
+  left: 0; /* Alinear con el botón */
+  background-color: rgba(255, 255, 255, 0.537); /* Fondo del menú */
+  border: 1px solid #ccc; /* Borde del menú */
+  z-index: 1000; /* Asegura que el menú esté por encima de otros elementos */
+  width: 100px; /* Ajusta el ancho del menú desplegable */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Mostrar el menú desplegable al pasar sobre el botón */
+#user-section:hover .dropdown-menu {
+  display: block; /* Mostrar el menú desplegable */
+}
+
+/* Enlaces dentro del menú desplegable */
+#user-section .dropdown-menu .nav-link {
+  display: block;
+  padding: 10px 15px; /* Ajustar el tamaño de los botones */
+  font-size: 16px; /* Tamaño del texto de los enlaces */
+  color: white; /* Color del texto */
+  background-color: #962d2d; /* Color de fondo de los botones */
+  text-align: left; /* Alinear el texto a la izquierda */
   text-decoration: none; /* Sin subrayado */
-  color: black; /* Color del texto */
+  transition: background-color 0.3s ease; /* Transición suave en hover */
+  border-radius: 5px;
+  margin: 5px 0; /* Espaciado entre enlaces */
 }
 
-.dropdown-menu .nav-link:hover {
-  background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
+#user-section .dropdown-menu .nav-link:hover {
+  background-color: #7a2323; /* Cambia el color de fondo en hover */
+}
+
+/* Botón especial para "Cerrar Sesión" */
+#user-section .dropdown-menu button.nav-link {
+  background-color: #ff4b4b; /* Fondo para el botón de "Cerrar Sesión" */
+  border: none;
+  color: white;
+  padding: 10px 50px; /* Ajusta el tamaño del botón */
+
+}
+
+#user-section .dropdown-menu button.nav-link:hover {
+  background-color: #e63939; /* Color más oscuro al hacer hover en "Cerrar Sesión" */
+}
+
+
+/* Estilo para el botón que cierra sesión */
+button.nav-link {
+  background-color: #ff4b4b; /* Color de fondo específico para el botón de "Cerrar Sesión" */
 }
 
 

@@ -24,6 +24,8 @@ export function UserSection() {
                 <NavLink to="/ControlPanel" className="nav-link">Panel de Control</NavLink>
               )}
               <NavLink to="/perfil" className="nav-link">Perfil</NavLink>
+              <NavLink to="/VerPedidos" className="nav-link">Mis pedidos</NavLink>
+
               <button onClick={handleLogout} className="nav-link">Cerrar Sesión</button>
             </div>
           )}

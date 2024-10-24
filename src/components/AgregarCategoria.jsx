@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+
 export function AgregarCategoria() {
     const [imagenBase64, setImagenBase64] = useState(null);
 

@@ -79,10 +79,6 @@ export function Login() {
             <span className="error-message">El campo es requerido</span>
 
             <div className="remember-forgot">
-              <label>
-                <input type="checkbox" /> Recuérdame
-              </label>
-              <NavLink to="/recuperar-contrasena">¿Olvidaste tu contraseña?</NavLink>
             </div>
 
             <button type="submit" className="submit-btn">Iniciar sesión</button>

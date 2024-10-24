@@ -66,3 +66,41 @@
 .product-container button:hover {
   background-color: #7d1515; /* Color al pasar el cursor */
 }
+
+
+/* Estilos para la alerta emergente centrada */
+.alert {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrado vertical y horizontal */
+  background-color: #28a745;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-size: 16px;
+  animation: fadeInOut 2.5s ease-in-out;
+  text-align: center;
+}
+
+/* Animación de entrada y salida */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%); /* Empieza un poco más arriba */
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -40%); /* Se va hacia abajo al desaparecer */
+  }
+}
