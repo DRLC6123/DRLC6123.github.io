@@ -29,12 +29,11 @@ export function AgregarProveedor() {
         throw new Error(errorData.message || 'Error al crear el proveedor');
       }
 
-      // Obtener la respuesta en formato JSON si es necesario
       const result = await response.json();
-      // Mostrar alerta de éxito
       alert('Proveedor agregado con éxito');
       
       // Aquí puedes agregar lógica adicional, como redirigir a otra página o limpiar el formulario
+      setMensaje('Proveedor agregado con éxito');
 
     } catch (error) {
       setMensaje(`Error: ${error.message}`);
@@ -79,7 +78,7 @@ export function AgregarProveedor() {
 
         <button type="submit" className="submit-btn">Agregar Proveedor</button>
       </form>
-      {mensaje && <p>{mensaje}</p>}
+      {mensaje && <p className="alert">{mensaje}</p>}
     </div>
   );
 }

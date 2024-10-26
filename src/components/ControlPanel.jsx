@@ -30,16 +30,24 @@ export function ControlPanel() {
                             Agregar Oferta
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/AgregarTemporada" className="custom-nav-button">
-                            Agregar Temporada
-                        </NavLink>
-                    </li>
+
                     <li>
                         <NavLink to="/AgregarProveedor" className="custom-nav-button">
                             Agregar Proveedor
                         </NavLink>
                     </li>
+                    
+                    <li>
+                        <NavLink to="/RegistroAdmin" className="custom-nav-button">
+                            Registrar Administrador
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/Pedidos" className="custom-nav-button">
+                            Pedidos
+                        </NavLink>
+                    </li>
+                    
                     <li>
                         <NavLink to="/Inventario" className="custom-nav-button">
                             Inventario

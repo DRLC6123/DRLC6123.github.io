@@ -94,3 +94,65 @@ select {
     font-size: 1.2rem;
     margin-top: 10px;
 }
+
+
+.alert {
+    position: fixed; /* Mantiene la alerta en la misma posición de la pantalla */
+    top: 20px; /* Espaciado desde la parte superior de la pantalla */
+    left: 50%; /* Centrado horizontalmente */
+    transform: translateX(-50%); /* Centrado absoluto */
+    background-color: #4CAF50; /* Color de fondo verde */
+    color: white; /* Color del texto */
+    padding: 15px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    z-index: 1000; /* Asegura que la alerta esté encima de otros elementos */
+    transition: opacity 0.5s ease-in-out; /* Transición suave para la aparición/desaparición */
+    opacity: 1; /* Asegura que sea visible */
+}
+
+/* Para ocultar la alerta después de que se establece a false */
+.alert.hide {
+    opacity: 0; /* Hace que la alerta sea invisible */
+    pointer-events: none; /* Evita que se puedan hacer clics en la alerta */
+}
+
+/* Área de arrastrar y soltar */
+.dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.dropzone p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.dropzone span {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+/* Previsualización de la imagen */
+.imagen-preview {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.imagen-preview img {
+    max-width: 200px;
+    border-radius: 10px;
+}
+
+/* Mensaje de éxito */
+.mensaje-exito {
+    text-align: center;
+    color: green;
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+

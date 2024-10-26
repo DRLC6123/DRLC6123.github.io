@@ -39,6 +39,9 @@ import { VerPedidos } from './components/VerPedidos.jsx';
 import { ModificarCategoria } from './components/ModificarCategoria.jsx';
 import ModificarOferta from './components/ModificarOferta.jsx';
 import { Ofertas } from './components/OfertasPagina.jsx';
+import { Categorias } from './components/Categorias.jsx';
+import { ProductosPorCategoria } from './components/ProductosPorCategoria.jsx';
+import {RegistroAdmin} from './components/RegistroAdmin.jsx'
 
 const Layout = ({ agregarProducto }) => (
   <>
@@ -78,8 +81,6 @@ const App = () => {
               { path: "/AgregarProducto", element: <AgregarProducto /> },
               { path: "/ModificarProducto", element: <AgregarProducto /> },
 
-              { path: "/AgregarTemporada", element: <AgregarTemporada /> },
-              { path: "/ModificarTemporada", element: <AgregarTemporada /> },
 
               { path: "/AgregarCategoria", element: <AgregarCategoria /> },
               { path: "/ModificarCategoria", element: <ModificarCategoria /> },
@@ -96,7 +97,10 @@ const App = () => {
               { path: "/AgregarProveedor", element:<AgregarProveedor></AgregarProveedor>},
               { path: "/VerPedidos", element:<VerPedidos/>},
               { path: "/Ofertas", element:<Ofertas/>},
+              { path: "/RegistroAdmin", element:<RegistroAdmin/>},
 
+              { path: "/Categorias", element:<Categorias/>},
+              {path:"/productos/categoria/:id_categoria", element:<ProductosPorCategoria /> },
 
               { path: "/inventario", element: <Inventario></Inventario>}
 

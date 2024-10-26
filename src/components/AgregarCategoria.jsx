@@ -1,37 +1,33 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-
 export function AgregarCategoria() {
     const [imagenBase64, setImagenBase64] = useState(null);
+    const [mensajeExito, setMensajeExito] = useState('');
+    const { register, handleSubmit } = useForm();
 
+    // Convertir imagen a base64
     const convertirBase64 = (imagenes) => {
         const archivo = imagenes[0];
         var reader = new FileReader();
-        
+
         reader.readAsDataURL(archivo);
         reader.onload = function () {
-            const base64ConEncabezado = reader.result; // Esto ya incluye el encabezado 'data:image/png;base64,'
-            setImagen(base64ConEncabezado);
+            const base64ConEncabezado = reader.result;
+            setImagenBase64(base64ConEncabezado);
         };
-    
         reader.onerror = function (error) {
             console.log('Error: ', error);
         };
     };
-    
-
-    const { register, handleSubmit } = useForm();
 
     const onSubmit = async (data) => {
-        const randomIdCategoria = Math.floor(Math.random() * 10) + 1; // Genera un número aleatorio entre 1 y 10
-
         const payload = {
-            id_categoria: 0, // Usa el id aleatorio
+            id_categoria: 0,
             nombre: data.nombre,
-            id_padre: 1, // Usa 0 si no hay id_padre
-            estado: "1", // Asegúrate de que este campo sea una cadena, puedes ajustarlo si es necesario
-            imagen: imagenBase64, // Usa la imagen en formato base64
+            id_padre: 1,
+            estado: "1",
+            imagen: imagenBase64,
         };
 
         try {
@@ -51,20 +47,57 @@ export function AgregarCategoria() {
                 result = await response.text();
             }
 
-            console.log('Success:', result);
+            setMensajeExito('Categoría agregada exitosamente.');
         } catch (error) {
             console.error('Error:', error.message);
         }
     };
 
+    // Manejar drop de archivo
+    const handleDrop = (e) => {
+        e.preventDefault();
+        convertirBase64(e.dataTransfer.files);
+    };
+
+    // Manejar drag over
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    // Simular clic en el input de archivo
+    const handleClickArea = () => {
+        document.getElementById('fileInput').click();
+    };
+
     return (
         <div>
+            <h1>Agregar Categoría</h1>
+            {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="nombre">Nombre *</label>
                 <input type="text" {...register('nombre')} placeholder="Nombre de la categoría" required />
 
-                <label htmlFor="imagen">Imagen *</label>
-                <input type="file" onChange={(e) => convertirBase64(e.target.files)} required />
+                {/* Área de arrastrar y seleccionar archivo */}
+                <div
+                    className="dropzone"
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onClick={handleClickArea}
+                >
+                    <p>Arrastra y suelta la imagen aquí o <span>haz clic</span> para seleccionar una imagen</p>
+                    <input
+                        type="file"
+                        id="fileInput"
+                        style={{ display: 'none' }}
+                        onChange={(e) => convertirBase64(e.target.files)}
+                    />
+                </div>
+
+                {imagenBase64 && (
+                    <div className="imagen-preview">
+                        <img src={imagenBase64} alt="Previsualización" />
+                    </div>
+                )}
 
                 <button type="submit" className="submit-btn">Agregar Categoría</button>
             </form>

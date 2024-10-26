@@ -1,6 +1,5 @@
-/* Estilo general */
 body {
-  background-image: url("../img/fondorosa.jpg");
+  background-image: url("/icons/fondorosa.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

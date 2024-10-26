@@ -51,10 +51,6 @@ body {
   align-items: center;
 }
 
-.navbar .logo img {
-  margin-right: 10px;
-}
-
 .nav-links {
   list-style: none;
   display: flex;
@@ -74,7 +70,7 @@ body {
   font-size: 16px; /* Tamaño de la fuente */
   color: #000;
   position: relative; /* Para manejar la pseudo-clase ::before */
-  padding-bottom: 5px;
+  padding: 5px 10px; /* Espaciado alrededor del enlace */
   transition: color 0.3s ease, transform 0.3s ease; /* Animamos el color y el tamaño */
 }
 
@@ -100,16 +96,34 @@ body {
 }
 
 /* Estilo del carrito */
-.cart-link img {
-  width: 24px; /* Tamaño del ícono del carrito */
+.carrito-container {
+  position: relative;
+  display: flex; /* Alinear icono y número del carrito */
+  align-items: center;
+}
+
+.cart-icon {
+  width: 32px; /* Tamaño del ícono del carrito */
   height: auto;
+}
+
+.cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 /* Botón de inicio de sesión (sin línea roja y sin animación de hover) */
 #login-button {
   background-color: #962d2d;
   color: white;
-  padding: 55px; /* Tamaño del botón de inicio de sesión */
+  padding: 10px 15px; /* Tamaño del botón de inicio de sesión */
   border: none;
   border-radius: 5px;
   font-size: 14px; /* Tamaño del texto del botón */
@@ -125,72 +139,56 @@ body {
   position: relative; /* Para posicionar correctamente el menú desplegable */
 }
 
-#user-section button.dropdown-button {
-  background-color: #962d2d; /* Color de fondo del botón */
-  color: white; /* Color del texto */
+#user-section {
+  position: relative;
+  display: inline-block; /* Para mantener el menú en línea con otros elementos */
+}.dropdown-button {
+  background-color: transparent; /* Color de fondo por defecto */
+  color: black; /* Color del texto */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  padding: 10px 15px; /* Espaciado alrededor del texto */
+  font-size: 16px; /* Tamaño de la fuente */
   border: none; /* Sin borde */
-  padding: 10px 15px; /* Ajusta el tamaño del botón */
   border-radius: 5px; /* Bordes redondeados */
-  font-size: 16px; /* Tamaño de la fuente del botón */
-  cursor: pointer; /* Cursor de puntero */
-  transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
+  display: inline-block; /* Asegúrate de que ocupe el espacio necesario */
+  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
 }
 
-/* Menú desplegable dentro del user-section */
-#user-section .dropdown-menu {
-  display: none; /* Oculto por defecto */
-  position: absolute; /* Para que se sobreponga al contenido */
-  top: 100%; /* Posicionar justo debajo del botón */
-  left: 0; /* Alinear con el botón */
-  background-color: rgba(255, 255, 255, 0.537); /* Fondo del menú */
-  border: 1px solid #ccc; /* Borde del menú */
-  z-index: 1000; /* Asegura que el menú esté por encima de otros elementos */
-  width: 100px; /* Ajusta el ancho del menú desplegable */
-  border-radius: 5px; /* Bordes redondeados */
+.dropdown-button:hover {
+  background-color: #7a2323; /* Cambia a rojo al pasar el mouse */
+  color: white; /* Asegúrate de que el texto se vea bien sobre el fondo rojo */
 }
 
-/* Mostrar el menú desplegable al pasar sobre el botón */
+/* Estilo del menú desplegable */
+.dropdown-menu {
+  position: absolute; /* Asegúrate de que el menú se posicione correctamente */
+  background-color: white; /* Color de fondo del menú */
+  border: 1px solid #ccc; /* Borde alrededor del menú */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Sombra para un efecto de profundidad */
+  z-index: 1000; /* Asegúrate de que el menú esté por encima de otros elementos */
+  min-width: 150px; /* Ancho mínimo del menú */
+  display: none; /* Oculta el menú por defecto */
+}
+.dropdown-button {
+  width: 100%; /* Asegúrate de que el botón ocupe todo el ancho */
+}
+/* Muestra el menú al hacer hover sobre el usuario */
 #user-section:hover .dropdown-menu {
-  display: block; /* Mostrar el menú desplegable */
+  display: block; /* Muestra el menú al pasar el mouse */
 }
 
-/* Enlaces dentro del menú desplegable */
-#user-section .dropdown-menu .nav-link {
-  display: block;
-  padding: 10px 15px; /* Ajustar el tamaño de los botones */
-  font-size: 16px; /* Tamaño del texto de los enlaces */
-  color: white; /* Color del texto */
-  background-color: #962d2d; /* Color de fondo de los botones */
-  text-align: left; /* Alinear el texto a la izquierda */
+
+
+.nav-link {
+  display: block; /* Cada enlace ocupa toda la línea */
+  padding: 10px 15px; /* Relleno para los enlaces */
+  color: #333; /* Cambia el color según tu diseño */
   text-decoration: none; /* Sin subrayado */
-  transition: background-color 0.3s ease; /* Transición suave en hover */
-  border-radius: 5px;
-  margin: 5px 0; /* Espaciado entre enlaces */
 }
 
-#user-section .dropdown-menu .nav-link:hover {
-  background-color: #7a2323; /* Cambia el color de fondo en hover */
+.nav-link:hover {
+  background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
 }
-
-/* Botón especial para "Cerrar Sesión" */
-#user-section .dropdown-menu button.nav-link {
-  background-color: #ff4b4b; /* Fondo para el botón de "Cerrar Sesión" */
-  border: none;
-  color: white;
-  padding: 10px 50px; /* Ajusta el tamaño del botón */
-
-}
-
-#user-section .dropdown-menu button.nav-link:hover {
-  background-color: #e63939; /* Color más oscuro al hacer hover en "Cerrar Sesión" */
-}
-
-
-/* Estilo para el botón que cierra sesión */
-button.nav-link {
-  background-color: #ff4b4b; /* Color de fondo específico para el botón de "Cerrar Sesión" */
-}
-
 
 
 
@@ -226,62 +224,28 @@ button.nav-link {
   color: #e27f86; /* Cambia a tu color preferido al pasar el mouse */
 }
 
-.social-links a {
-  margin-right: 10px;
+.footer-title {
+  font-weight: bold; /* Negrita para los títulos del footer */
+  margin-bottom: 10px; /* Espacio entre el título y el contenido */
 }
 
-/* Estilo del ícono del carrito y el contador */
-.carrito-container {
-  position: relative;
+.footer-text {
+  margin: 0; /* Margen cero para el texto */
 }
 
-.cart-icon {
-  width: 32px;
-  height: 32px;
-}
-
-.cart-count {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: #e74c3c;
-  color: white;
-  border-radius: 50%;
-  padding: 5px;
-  font-size: 12px;
-  font-weight: bold;
+.footer-icons {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 5px;
-  height: 5px;
+  justify-content: center; /* Centrar los iconos de redes sociales */
+  gap: 10px; /* Espaciado entre iconos */
 }
 
-
-/* +++++++++++++++++++++++++++++++++++++++ ESTILOS RESPONSIVOS +++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
-    align-items: flex-start; /* Alinea a la izquierda */
-  }
-
-  .nav-links {
-    flex-direction: column; /* Alinea los enlaces en columna */
-    width: 100%; /* Ocupar todo el ancho */
-  }
-
-  .nav-links li {
-    margin: 5px 0; /* Espacio entre los enlaces */
-  }
-
-  .footer-container {
-    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
-    align-items: center; /* Centrar contenido */
-  }
-
-  .footer-section {
-    width: 100%; /* Ocupar todo el ancho en pantallas pequeñas */
-    text-align: center; /* Centrar texto en el footer */
-  }
+.footer-icons img {
+  width: 30px; /* Tamaño de los iconos de redes sociales */
+  height: auto; /* Mantener proporción de los iconos */
 }
+
+/* +++++++++++++++++++++++++++++++++++++++ FORMATO BASICO FIN +++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* Estilo del menú desplegable dentro del user-section */
+/* Estilos para el UserSection */
+
 

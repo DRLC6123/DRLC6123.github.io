@@ -7,8 +7,9 @@ import { useFetch } from '../useFetch';
 export function Direcciones() {
     const [direcciones, setDirecciones] = useState([]);
     const [direccionSeleccionada, setDireccionSeleccionada] = useState(null);
+    const [showAlert, setShowAlert] = useState(false); // Estado para manejar la alerta
     const { user } = useContext(AuthContext);
-    const { carrito, inventario, vaciarCarrito } = useCarrito(); // Obtener inventario y función para vaciar el carrito
+    const { carrito, inventario, vaciarCarrito } = useCarrito(); 
     const navigate = useNavigate();
 
     const { data, error } = useFetch(`https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Direccion/obtener/usuario/${user?.id}`);
@@ -122,12 +123,13 @@ export function Direcciones() {
                 }
             }
 
-            alert('Compra finalizada con éxito.');
-            
-            // Vaciar el carrito después de finalizar la compra
-            vaciarCarrito();
+            setShowAlert(true); // Mostrar alerta al finalizar la compra
+            setTimeout(() => {
+                setShowAlert(false); // Ocultar alerta después de 2 segundos
+                vaciarCarrito(); // Vaciar el carrito después de finalizar la compra
+                navigate('/'); // Navegar a la página principal
+            }, 2000);
 
-            navigate('/');
         } catch (error) {
             console.error('Error al finalizar la compra:', error);
             alert('Hubo un problema al finalizar la compra. Por favor, inténtalo de nuevo.');
@@ -137,33 +139,51 @@ export function Direcciones() {
     return (
         <div className="direcciones-container">
             <h2>Direcciones</h2>
-            <div className="direcciones-list">
-                {direcciones.length > 0 ? (
-                    direcciones.map((direccion) => (
-                        <div key={direccion.id_direccion} className="direccion">
-                            <input
-                                type="radio"
-                                name="direccion"
-                                value={direccion.id_direccion}
-                                checked={direccionSeleccionada === direccion.id_direccion}
-                                onChange={() => setDireccionSeleccionada(direccion.id_direccion)}
-                            />
-                            <p>
-                                {`${direccion.pais}, ${direccion.departamento}, ${direccion.municipio}, ${direccion.zona}, 
-                                ${direccion.colonia}, ${direccion.direccion}`}
-                            </p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No tienes direcciones asociadas.</p>
-                )}
-            </div>
+            <table className="direcciones-table">
+                <thead>
+                    <tr>
+                        <th>Seleccionar</th>
+                        <th>Municipio</th>
+                        <th>Zona</th>
+                        <th>Colonia</th>
+                        <th>Dirección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {direcciones.length > 0 ? (
+                        direcciones.map((direccion) => (
+                            <tr key={direccion.id_direccion} onClick={() => setDireccionSeleccionada(direccion.id_direccion)} style={{ cursor: 'pointer', backgroundColor: direccionSeleccionada === direccion.id_direccion ? '#d3d3d3' : 'transparent' }}>
+                                <td>
+                                    <input
+                                        type="radio"
+                                        name="direccion"
+                                        value={direccion.id_direccion}
+                                        checked={direccionSeleccionada === direccion.id_direccion}
+                                        onChange={() => setDireccionSeleccionada(direccion.id_direccion)}
+                                    />
+                                </td>
+                                <td>{direccion.municipio}</td>
+                                <td>{direccion.zona}</td>
+                                <td>{direccion.colonia}</td>
+                                <td>{direccion.direccion}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5">No tienes direcciones asociadas.</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
             <button onClick={finalizarCompra} disabled={!direccionSeleccionada}>
                 Finalizar Compra
             </button>
             <button onClick={() => navigate('/AgregarDireccion')} className="btn-agregar-direccion">
                 Agregar Dirección
             </button>
+
+            {/* Mostrar alerta */}
+            {showAlert && <div className="alert">Compra finalizada con éxito.</div>}
         </div>
     );
 }

@@ -94,3 +94,162 @@ a:hover {
   color: gray; /* Changes the link color to gray */
   text-decoration: none; /* Removes underline */
 }
+.agotado-text {
+  position: absolute; /* Para posicionar el texto sobre la imagen */
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Ajusta el centro */
+  color: red; /* Color del texto */
+  font-size: 1.5rem; /* Tamaño del texto */
+  font-weight: bold; /* Negrita */
+  text-shadow: 1px 1px 2px red; /* Sombra para mejor visibilidad */
+  z-index: 1; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+
+.categorias-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Espacio entre tarjetas */
+}
+
+.categoria-card {
+  width: calc(25% - 16px); /* Ajusta el tamaño de las tarjetas */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.categoria-card img {
+  width: 100%;
+  height: auto;
+}
+
+.categoria-card h3 {
+  padding: 10px;
+}
+
+.categoria-card:hover {
+  transform: scale(1.05);
+}
+
+.categoria-card img {
+  width: 100%; /* Asegura que la imagen llene el ancho de la tarjeta */
+  height: 150px; /* Altura fija para todas las imágenes */
+  object-fit: contain; /* Ajusta la imagen sin recortar */
+}
+
+
+/* Estilos para los precios */
+.producto .price {
+  display: flex; /* Usar flexbox para alinear los elementos */
+  flex-direction: column; /* Alinear los precios en una columna */
+  align-items: center; /* Centrar el contenido horizontalmente */
+  margin: 5px 0;
+}
+
+.precio-original {
+  font-size: 1rem; /* Tamaño de fuente para el precio original */
+  color: #999; /* Color del precio original */
+  text-decoration: line-through; /* Tachado */
+}
+
+.precio-oferta {
+  font-size: 1.2rem; /* Tamaño de fuente para el precio en oferta */
+  color: #e74c3c; /* Color del precio en oferta */
+  font-weight: bold; /* Negrita */
+}
+
+.direcciones-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid lightgray; /* Borde externo de la tabla */
+}
+
+.direcciones-table th, .direcciones-table td {
+  border: 1px solid lightgray; /* Bordes de las celdas */
+  padding: 8px;
+  text-align: left;
+}
+
+.direcciones-table th {
+  background-color: #7d1515; /* Color de fondo de los encabezados */
+  color: white; /* Color del texto de los encabezados */
+}
+
+.direcciones-table tr:hover {
+  background-color: #f5f5f5; /* Color de fondo al pasar el mouse sobre la fila */
+}
+
+
+.inventario-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid lightgray; /* Borde externo de la tabla */
+}
+
+.inventario-table th, .inventario-table td {
+  border: 1px solid lightgray; /* Bordes de las celdas */
+  padding: 8px;
+  text-align: left;
+}
+
+.inventario-table th {
+  background-color: #7d1515; /* Color de fondo de los encabezados */
+  color: white; /* Color del texto de los encabezados */
+}
+
+.inventario-table tr:hover {
+  background-color: #f5f5f5; /* Color de fondo al pasar el mouse sobre la fila */
+}
+
+
+/* Estilo general para la tabla */
+.table {
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  border-collapse: collapse; /* Elimina el espacio entre las celdas */
+  margin-top: 20px; /* Espacio por encima de la tabla */
+}
+
+.table th, .table td {
+  padding: 12px; /* Espaciado interno en celdas */
+  text-align: left; /* Alineación a la izquierda */
+  border-bottom: 1px solid #ddd; /* Línea de separación entre filas */
+}
+
+.table th {
+  background-color: #962d2d; /* Color de fondo del encabezado */
+  color: white; /* Color del texto en el encabezado */
+}
+
+.table tr:hover {
+  background-color: #f5f5f5; /* Color de fondo al pasar el mouse */
+}
+
+.table td {
+  color: #333; /* Color de texto para las celdas */
+}
+
+
+/* styles.css */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}

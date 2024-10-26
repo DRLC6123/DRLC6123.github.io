@@ -86,8 +86,8 @@ export function Inventario() {
         <div>
             <h2>Inventario</h2>
             <button onClick={exportarExcel}>Exportar a Excel</button>
-            <table border="1" cellPadding="10">
-            <thead>
+            <table className="inventario-table">
+                <thead>
                     <tr>
                         <th>Producto</th>
                         <th>Proveedor</th>

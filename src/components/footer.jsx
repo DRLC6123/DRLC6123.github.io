@@ -17,8 +17,8 @@ return(
     <div className="footer-section">
       <h4>Síguenos</h4>
       <div className="social-links">
-        <img src="/public/icons/facebook.png" alt="Facebook" width="24"/>
-        <img src="/public/icons/instagram.png" alt="Instagram" width="24"/>
+        <img src="/icons/facebook.png" alt="Facebook" width="24"/>
+        <img src="/icons/instagram.png" alt="Instagram" width="24"/>
       </div>
     </div>
   </div>

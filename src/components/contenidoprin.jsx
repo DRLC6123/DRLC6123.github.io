@@ -35,7 +35,7 @@ export function Contenido() {
 
     return (
         <div>
-            <h1>Contenido Principal</h1>
+            <h1>PRODUCTOS MAS VENDIDOS</h1>
             <div className="products">
                 {productosError && <p>Error: {productosError}</p>}
                 {ofertasError && <p>Error al cargar ofertas: {ofertasError}</p>}

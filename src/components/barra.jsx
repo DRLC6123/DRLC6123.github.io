@@ -19,12 +19,16 @@ export function Barra() {
           <NavLink to="/productos" className="nav-button">
             Productos
           </NavLink>
+        </li>
+        <li>
           <NavLink to="/Ofertas" className="nav-button">
             Ofertas
           </NavLink>
         </li>
         <li>
-          
+          <NavLink to="/Categorias" className="nav-button">
+            Categorías
+          </NavLink>
         </li>
         <li id="user-section">
           <UserSection />
@@ -38,4 +42,4 @@ export function Barra() {
       </ul>
     </nav>
   );
-};
+}

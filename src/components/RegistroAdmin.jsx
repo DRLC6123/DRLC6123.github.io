@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 
-export function Registro() {
+export function RegistroAdmin() {
     const { register, handleSubmit } = useForm();
     const [showAlert, setShowAlert] = useState(false); // Estado para manejar la alerta
     const navigate = useNavigate(); // Inicializar useNavigate
@@ -15,7 +15,7 @@ export function Registro() {
                 correo: data.email,
                 password: data.password,
                 estado: 1,  // valor quemado
-                id_rol: 2,  // valor quemado
+                id_rol: 1,  // valor quemado
             };
     
             const response = await fetch('https://el-regalito-back-cpcbafcrcyb8gsab.canadacentral-01.azurewebsites.net/api/Principal/Registro', {
@@ -50,8 +50,8 @@ export function Registro() {
     return (
         <div className="login-container-registro">
             <div className="left-panel">
-                <h2>¡Bienvenido!</h2>
-                <p>Por favor, ingresa tus datos para crear tu cuenta.</p>
+                <h2>Registro usuario Administrador</h2>
+                <p>Por favor, ingresa los datos para crear cuenta de administrador.</p>
             </div>
             <div className="right-panel">
                 <h2>Regístrate</h2>
@@ -71,7 +71,7 @@ export function Registro() {
                     <label htmlFor="confirm-password">Confirmar Contraseña *</label>
                     <input type="password" id="confirm-password" name="confirm-password" placeholder="Repite la contraseña" required />
                     
-                    <button type="submit" className="submit-btn">Registrarse</button>
+                    <button type="submit" className="submit-btn">Registrar</button>
                 </form>
 
                 {/* Mostrar alerta */}
